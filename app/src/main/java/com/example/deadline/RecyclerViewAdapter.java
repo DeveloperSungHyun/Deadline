@@ -34,10 +34,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
 
-        holder.TextView_Title.setText("test");
+        holder.TextView_Title.setText(itemList_views.get(position).getTitle());
         holder.TextView_Memo.setText("test");
-        holder.TextView_Day.setText("test");
-        holder.TextView_Data.setText("test");
+        holder.TextView_Data.setText(itemList_views.get(position).getTime_Y() + "년 " + itemList_views.get(position).getTime_M() + "월 " + itemList_views.get(position).getTime_D() + "일");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,14 +63,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         TextView TextView_Title;
         TextView TextView_Memo;
-        TextView TextView_Day;
         TextView TextView_Data;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             TextView_Title = itemView.findViewById(R.id.TextView_Title);
             TextView_Memo = itemView.findViewById(R.id.TextView_Memo);
-            TextView_Day = itemView.findViewById(R.id.TextView_Day);
             TextView_Data = itemView.findViewById(R.id.TextView_Data);
 
 

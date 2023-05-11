@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         itemList_views = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
-            itemList_views.add(new ItemList_View("a", "a", 0, 0, 0));
+            itemList_views.add(new ItemList_View("모바일 프로그래밍 프로젝트", "a", 2023, 5, 12));
         }
 
         recyclerViewAdapter = new RecyclerViewAdapter(itemList_views);
