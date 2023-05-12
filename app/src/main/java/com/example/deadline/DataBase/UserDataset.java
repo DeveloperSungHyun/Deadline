@@ -8,9 +8,10 @@ public class UserDataset {
     @PrimaryKey(autoGenerate = true)
     private int id = 0;
 
+    int Type;
     String Title;
     String Memo;
-    int Y, M, D;//년 월 일
+    int Y, M, D; //년 월 일
     int time_h, time_m;//시 분
 
     public int getId() {
@@ -19,6 +20,14 @@ public class UserDataset {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getType() {
+        return Type;
+    }
+
+    public void setType(int type) {
+        Type = type;
     }
 
     public String getTitle() {

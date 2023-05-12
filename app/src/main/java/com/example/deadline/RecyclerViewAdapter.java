@@ -35,7 +35,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
 
         holder.TextView_Title.setText(itemList_views.get(position).getTitle());
-        holder.TextView_Memo.setText("test");
+        holder.TextView_Memo.setText(itemList_views.get(position).getMemo());
         holder.TextView_Data.setText(itemList_views.get(position).getY() + "년 " + itemList_views.get(position).getM() + "월 " + itemList_views.get(position).getD() + "일");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

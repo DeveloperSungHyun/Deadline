@@ -45,9 +45,17 @@ public class MainActivity extends AppCompatActivity {
 
         itemList_views = new ArrayList<>();
 
-        for (int i = 0; i < 15; i++) {
-            itemList_views.add(new ItemList_View("모바일 프로그래밍 프로젝트", "a", 2023, 5, 12, 0, 0));
+
+        DataBaseManager dataBaseManager = new DataBaseManager(getApplicationContext());
+
+        dataBaseManager.setInsert(0, "aaa", "bbb", 2023, 5, 10, 5, 30);
+        List<UserDataset> date = dataBaseManager.getDate();
+
+        for (UserDataset dataset : date){
+            itemList_views.add(new
+                    ItemList_View(0, dataset.getTitle(), dataset.getMemo(), dataset.getY(), dataset.getM(), dataset.getD(), dataset.getTime_h(), dataset.getTime_m()));
         }
+
 
         recyclerViewAdapter = new RecyclerViewAdapter(itemList_views);
 
@@ -75,10 +83,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        DataBaseManager dataBaseManager = new DataBaseManager(getApplicationContext());
-
-        List<UserDataset> date = dataBaseManager.getDate();
-
-        Toast.makeText(this, date.get(1).getTitle(), Toast.LENGTH_SHORT).show();
     }
 }

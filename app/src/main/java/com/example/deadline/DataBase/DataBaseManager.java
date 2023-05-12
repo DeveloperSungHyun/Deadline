@@ -23,8 +23,9 @@ public class DataBaseManager {
         userDataset = new UserDataset();
     }
 
-    public void setInsert(String Title, String Memo, int Date_Y, int Date_M, int Date_D, int Time_h, int Time_m){
+    public void setInsert(int Type, String Title, String Memo, int Date_Y, int Date_M, int Date_D, int Time_h, int Time_m){
 
+        userDataset.setType(Type);
         userDataset.setTitle(Title);
         userDataset.setMemo(Memo);
         userDataset.setY(Date_Y);
@@ -37,9 +38,10 @@ public class DataBaseManager {
     }
 
 
-    public void setUpData(int id, String Title, String Memo, int Date_Y, int Date_M, int Date_D, int Time_h, int Time_m){
+    public void setUpData(int id, int Type, String Title, String Memo, int Date_Y, int Date_M, int Date_D, int Time_h, int Time_m){
 
         userDataset.setId(id);
+        userDataset.setType(Type);
         userDataset.setTitle(Title);
         userDataset.setMemo(Memo);
         userDataset.setY(Date_Y);
