@@ -1,22 +1,24 @@
-package com.example.deadline;
+package com.example.deadline.DataBase;
 
-public class ItemList_View {
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
+public class UserDataset {
+    @PrimaryKey(autoGenerate = true)
+    private int id = 0;
 
     String Title;
     String Memo;
     int Y, M, D;//년 월 일
     int time_h, time_m;//시 분
 
-    public ItemList_View(String Title, String Memo, int Y,int M,int D, int time_h, int time_m){
-        this.Title = Title;
-        this.Memo = Memo;
+    public int getId() {
+        return id;
+    }
 
-        this.Y = Y;
-        this.M = M;
-        this.D = M;
-
-        this.time_h = time_h;
-        this.time_m = time_m;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {

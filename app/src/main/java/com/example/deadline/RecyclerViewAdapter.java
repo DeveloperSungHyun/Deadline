@@ -36,7 +36,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.TextView_Title.setText(itemList_views.get(position).getTitle());
         holder.TextView_Memo.setText("test");
-        holder.TextView_Data.setText(itemList_views.get(position).getTime_Y() + "년 " + itemList_views.get(position).getTime_M() + "월 " + itemList_views.get(position).getTime_D() + "일");
+        holder.TextView_Data.setText(itemList_views.get(position).getY() + "년 " + itemList_views.get(position).getM() + "월 " + itemList_views.get(position).getD() + "일");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

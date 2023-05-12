@@ -3,15 +3,23 @@ package com.example.deadline;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.service.autofill.UserData;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.example.deadline.DataBase.DataBaseManager;
+import com.example.deadline.DataBase.UserDataBase;
+import com.example.deadline.DataBase.UserDataDao;
+import com.example.deadline.DataBase.UserDataset;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,12 +40,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         FloatingButton_add = findViewById(R.id.FloatingButton_add);
 
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
         itemList_views = new ArrayList<>();
 
-        for (int i = 0; i < 10; i++) {
-            itemList_views.add(new ItemList_View("모바일 프로그래밍 프로젝트", "a", 2023, 5, 12));
+        for (int i = 0; i < 15; i++) {
+            itemList_views.add(new ItemList_View("모바일 프로그래밍 프로젝트", "a", 2023, 5, 12, 0, 0));
         }
 
         recyclerViewAdapter = new RecyclerViewAdapter(itemList_views);
@@ -65,5 +74,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        DataBaseManager dataBaseManager = new DataBaseManager(getApplicationContext());
+
+        List<UserDataset> date = dataBaseManager.getDate();
+
+        Toast.makeText(this, date.get(1).getTitle(), Toast.LENGTH_SHORT).show();
     }
 }
