@@ -1,5 +1,6 @@
 package com.example.deadline;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +24,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    DataBaseManager dataBaseManager;
+    List<UserDataset> date;
+
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
 
@@ -31,6 +35,29 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton FloatingButton_add;
 
     boolean recyclerView_Scroll = false;//true = up, false = down
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        dataBaseManager = new DataBaseManager(getApplicationContext());
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+
+        itemList_views = new ArrayList<>();
+
+        itemList_views.clear();
+
+        for (UserDataset dataset : dataBaseManager.getDate()){
+            itemList_views.add(new
+                    ItemList_View(0, dataset.getTitle(), dataset.getMemo(), dataset.getY(), dataset.getM(), dataset.getD(), dataset.getTime_h(), dataset.getTime_m()));
+        }
+
+        recyclerViewAdapter = new RecyclerViewAdapter(itemList_views, getApplicationContext());
+        recyclerView.setAdapter(recyclerViewAdapter);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,25 +68,6 @@ public class MainActivity extends AppCompatActivity {
         FloatingButton_add = findViewById(R.id.FloatingButton_add);
 
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-
-        itemList_views = new ArrayList<>();
-
-
-        DataBaseManager dataBaseManager = new DataBaseManager(getApplicationContext());
-
-        dataBaseManager.setInsert(0, "aaa", "bbb", 2023, 5, 10, 5, 30);
-        List<UserDataset> date = dataBaseManager.getDate();
-
-        for (UserDataset dataset : date){
-            itemList_views.add(new
-                    ItemList_View(0, dataset.getTitle(), dataset.getMemo(), dataset.getY(), dataset.getM(), dataset.getD(), dataset.getTime_h(), dataset.getTime_m()));
-        }
-
-
-        recyclerViewAdapter = new RecyclerViewAdapter(itemList_views);
-
-        recyclerView.setAdapter(recyclerViewAdapter);
 
         recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
