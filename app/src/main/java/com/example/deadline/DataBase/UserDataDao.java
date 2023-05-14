@@ -20,7 +20,7 @@ public interface UserDataDao {
     @Delete
     void setDelete(UserDataset userDataset);
 
-    @Query("SELECT * FROM UserDataset")
+    @Query("SELECT * FROM UserDataset ORDER BY Y, M, D, time_h, time_m, Title")
     List<UserDataset> getDataAll();
 
 }

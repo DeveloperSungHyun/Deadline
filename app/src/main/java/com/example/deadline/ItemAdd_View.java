@@ -86,13 +86,16 @@ public class ItemAdd_View extends Activity {
         TextView_TimeSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getApplicationContext(), new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(ItemAdd_View.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         Time_h = hourOfDay;
                         Time_m = minute;
+
+                        TextView_TimeSetting.setText(Time_h + " : " + Time_m);
                     }
                 }, 0, 0, false);
+                timePickerDialog.show();
             }
         });
 

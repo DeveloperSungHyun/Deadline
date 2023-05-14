@@ -44,6 +44,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.TextView_Title.setText(itemList_views.get(position).getTitle());
         holder.TextView_Memo.setText(itemList_views.get(position).getMemo());
         holder.TextView_Data.setText(itemList_views.get(position).getY() + "년 " + itemList_views.get(position).getM() + "월 " + itemList_views.get(position).getD() + "일");
+        holder.TextView_Time.setText(itemList_views.get(position).getTime_h() + " : " + itemList_views.get(position).getTime_m());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,13 +77,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView TextView_Title;
         TextView TextView_Memo;
         TextView TextView_Data;
+        TextView TextView_Time;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             TextView_Title = itemView.findViewById(R.id.TextView_Title);
             TextView_Memo = itemView.findViewById(R.id.TextView_Memo);
             TextView_Data = itemView.findViewById(R.id.TextView_Data);
-
+            TextView_Time = itemView.findViewById(R.id.TextView_Time);
 
         }
     }
