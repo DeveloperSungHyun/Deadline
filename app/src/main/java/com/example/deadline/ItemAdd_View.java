@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,19 +37,33 @@ public class ItemAdd_View extends Activity {
 
     ArrayAdapter<String> Type_list_ad;
 
-    int Type;
-    String Title;
-    String Memo;
-    int Data_Y, Data_M, Data_D;
-    int Time_h, Time_m;
+    Calendar calendar;
+
+    private int Type;
+    private String Title;
+    private String Memo;
+    private int Data_Y, Data_M, Data_D;
+    private int Time_h, Time_m;
 
 
-    int ItemNumber = -1;//추가 = -1, 수정 0 < n
+    private int ItemNumber = -1;//추가 = -1, 수정 0 < n
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.itemadd_view);
+
+        calendar = Calendar.getInstance();
+
+        if(ItemNumber == -1) {
+            Data_Y = calendar.get(Calendar.YEAR);
+            Data_M = calendar.get(Calendar.MONTH);
+            Data_D = calendar.get(Calendar.DATE);
+
+            Time_h = calendar.get(Calendar.HOUR);
+            Time_m = calendar.get(Calendar.MINUTE);
+        }
+
 
         dataBaseManager = new DataBaseManager(getApplicationContext());
 
@@ -89,7 +104,7 @@ public class ItemAdd_View extends Activity {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 Data_Y = year;
-                Data_M = month + 1;
+                Data_M = month;
                 Data_D = dayOfMonth;
 
             }
@@ -112,21 +127,22 @@ public class ItemAdd_View extends Activity {
         });
 
 
-
-
-
         TextView_DataSave.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {//======================================확이버튼을 눌렀을때
                 Title = EditText_Title.getText().toString();
                 Memo = EditText_Memo.getText().toString();
 
-                if(ItemNumber == -1) {
-                    dataBaseManager.setInsert(Type, Title, Memo, Data_Y, Data_M, Data_D, Time_h, Time_m);
+                if(!Title.equals("")){
+                    if(ItemNumber == -1) {
+                        dataBaseManager.setInsert(Type, Title, Memo, Data_Y, Data_M, Data_D, Time_h, Time_m);
+                    }else{
+                        dataBaseManager.setUpData(dataBaseManager.getDate().get(ItemNumber).getId(), Type, Title, Memo, Data_Y, Data_M, Data_D, Time_h, Time_m);
+                    }
+                    finish();
                 }else{
-                    dataBaseManager.setUpData(dataBaseManager.getDate().get(ItemNumber).getId(), Type, Title, Memo, Data_Y, Data_M, Data_D, Time_h, Time_m);
+                    Toast.makeText(ItemAdd_View.this, "제목을 입력해 주세요.", Toast.LENGTH_SHORT).show();
                 }
-                finish();
             }
         });
     }
@@ -147,6 +163,8 @@ public class ItemAdd_View extends Activity {
 
         Log.d("ItemNumber", ItemNumber + "");
 
+        CalendarView_Data.setMinDate(System.currentTimeMillis());
+
         if(ItemNumber >= 0){
             UserDataset dataset = dataBaseManager.getDate().get(ItemNumber);
             Log.d("getTitle", dataset.getTitle() + "");
@@ -163,14 +181,13 @@ public class ItemAdd_View extends Activity {
             //==========================================
             //
 
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Data_Y, Data_D, Data_M);
+            calendar.set(Data_Y, Data_M, Data_D);
 
             Spinner_Type.setSelection(Type);
             EditText_Title.setText(Title);
             EditText_Memo.setText(Memo);
             CalendarView_Data.setDate(calendar.getTimeInMillis());
-
+            TextView_TimeSetting.setText(Time_h + " : " + Time_m);
         }
     }
 

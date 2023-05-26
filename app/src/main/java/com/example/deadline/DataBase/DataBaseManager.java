@@ -9,8 +9,8 @@ import java.util.List;
 
 public class DataBaseManager {
 
-    UserDataDao dataDao;
-    UserDataset userDataset;
+    private UserDataDao dataDao;
+    private UserDataset userDataset;
 
     public DataBaseManager(Context context){
         UserDataBase dataBase = Room.databaseBuilder(context, UserDataBase.class, "data")
