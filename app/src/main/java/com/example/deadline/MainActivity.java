@@ -34,9 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
     FloatingActionButton FloatingButton_add;
 
-    boolean recyclerView_Scroll = false;//true = up, false = down
-
-
     @Override
     protected void onStart() {
         super.onStart();

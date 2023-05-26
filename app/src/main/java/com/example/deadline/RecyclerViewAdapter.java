@@ -1,12 +1,17 @@
 package com.example.deadline;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,12 +61,33 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                dataBaseManager = new DataBaseManager(context);
 
-                Toast.makeText(v.getContext(), "num: " + dataBaseManager.getDate().get(holder.getAdapterPosition()).getId(), Toast.LENGTH_SHORT).show();
-                dataBaseManager.setDelete(dataBaseManager.getDate().get(holder.getAdapterPosition()).getId());
-                itemList_views.remove(holder.getAdapterPosition());
-                notifyItemRemoved(holder.getAdapterPosition());
+                String list[] = {"수정", "삭제"};
+                AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
+                dialog.setItems(list, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dataBaseManager = new DataBaseManager(context);
+
+                        switch (which){
+                            case 0:{
+                                Intent intent = new Intent(context.getApplicationContext(), ItemAdd_View.class);
+                                intent.putExtra("ItemNumber", position);
+                                v.getContext().startActivity(intent);
+                                break;
+                            }
+                            case 1:{
+                                Toast.makeText(v.getContext(), "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                dataBaseManager.setDelete(dataBaseManager.getDate().get(holder.getAdapterPosition()).getId());
+                                itemList_views.remove(holder.getAdapterPosition());
+                                notifyItemRemoved(holder.getAdapterPosition());
+                            }
+                        }
+                    }
+                });
+
+                AlertDialog alertDialog = dialog.create();
+                alertDialog.show();
                 return false;
             }
         });
