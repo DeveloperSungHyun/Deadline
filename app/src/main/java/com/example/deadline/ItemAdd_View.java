@@ -143,10 +143,27 @@ public class ItemAdd_View extends AppCompatActivity {
                     }
 
                     NotificationManagement notificationManagement = new NotificationManagement(getApplicationContext());
-                    notificationManagement.All_ListShow();
+                    String LongContent = "";
+
+                    Long PointDay, startDay;
+                    Calendar Point = Calendar.getInstance();
+                    Calendar start = Calendar.getInstance();
+                    for (int i = 0; i < dataBaseManager.getDate().size(); i++){//UserDataset userDataset : dataBaseManager.getDate()
+                        UserDataset userDataset = dataBaseManager.getDate().get(i);
+
+                        Point.set(userDataset.getY(), userDataset.getM(), userDataset.getD(), userDataset.getTime_h(), userDataset.getTime_m());
+
+                        PointDay = Point.getTimeInMillis();
+                        startDay = start.getTimeInMillis();
+
+                        LongContent += userDataset.getTitle() + "(D-" + (PointDay - startDay) / (24 * 60 * 60 * 1000) + ")";
+                        if(i < dataBaseManager.getDate().size() - 1) LongContent += "\n";
+                    }
+                    notificationManagement.All_ListShow("Title", dataBaseManager.getDate().get(0).getTitle(), LongContent);
+
                     finish();
                 }else{
-                    Toast.makeText(ItemAdd_View.this, "제목을 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ItemAdd_View.this, "타이틀을 입력해 주세요.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

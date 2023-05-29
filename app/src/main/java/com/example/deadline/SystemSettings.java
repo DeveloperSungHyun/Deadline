@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -15,25 +16,26 @@ import com.example.deadline.SystemSettingsValue.SystemValue;
 public class SystemSettings extends AppCompatActivity {
 
     LinearLayout LinearLayout_theme;
-
+    TextView TextView_Theme;
     SystemValue systemValue;
 
     int theme_num;
-
+    String theme_list[] = {"시스템 모드", "라이트 모드", "다크 모드"};
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.system_settings_view);
 
         LinearLayout_theme = findViewById(R.id.LinearLayout_theme);
-
+        TextView_Theme = findViewById(R.id.TextView_Theme);
 
         systemValue = new SystemValue(getApplicationContext());
 
+        TextView_Theme.setText(theme_list[systemValue.getTheme()]);
         LinearLayout_theme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String theme_list[] = {"시스템 모드", "라이트 모드", "다크 모드"};
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(SystemSettings.this);
                 builder.setTitle("테마선택");
 
@@ -61,6 +63,7 @@ public class SystemSettings extends AppCompatActivity {
                         }
 
                         systemValue.setTheme(theme_num);//데이터 저장
+                        TextView_Theme.setText(theme_list[systemValue.getTheme()]);
                     }
                 });
                 builder.show();

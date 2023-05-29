@@ -45,9 +45,7 @@ public class MainActivity extends AppCompatActivity {
         int permission = ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.POST_NOTIFICATIONS);
         if (permission == PackageManager.PERMISSION_DENIED) {
-            // 마쉬멜로우 이상버전부터 권한을 물어본다
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                // 권한 체크(READ_PHONE_STATE의 requestCode를 1000으로 세팅
                 requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 1000);
             }
             return;
@@ -65,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 if(scrollY > oldScrollY){//스크롤을 내린다면
                     FloatingButton_add.hide();
                 }
-                if(scrollY < oldScrollY){//스크롤을 내린다면
+                if(scrollY < oldScrollY){//스크롤을 올린다면
                     FloatingButton_add.show();
                 }
 

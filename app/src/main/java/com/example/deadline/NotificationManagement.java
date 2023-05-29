@@ -43,15 +43,15 @@ public class NotificationManagement {
         }
     }
 
-    public void All_ListShow(){
+    public void All_ListShow(String Title, String Content, String LongContent){
         NotificationCompat.Builder builder;
         builder = new NotificationCompat.Builder(context, "IMPORTANCE_LOW");
 
-        builder.setSmallIcon(R.drawable.settings_icon);
+        builder.setSmallIcon(R.drawable.ic_launcher_foreground);
         builder.setTicker("알람 간단한 설명");
-        builder.setContentTitle("Title");
-        builder.setContentText("Text");
-        builder.setStyle(new NotificationCompat.BigTextStyle().bigText("a\n a\n a\n"));
+        builder.setContentTitle(Title);
+        builder.setContentText(Content);
+        builder.setStyle(new NotificationCompat.BigTextStyle().bigText(LongContent));
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         builder.setPriority(0);
         builder.setDefaults(Notification.PRIORITY_HIGH);
@@ -59,4 +59,5 @@ public class NotificationManagement {
 
         notificationManager.notify(0, builder.build());
     }
+
 }
