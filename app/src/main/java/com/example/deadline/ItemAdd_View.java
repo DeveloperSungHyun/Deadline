@@ -141,6 +141,9 @@ public class ItemAdd_View extends AppCompatActivity {
                     }else{
                         dataBaseManager.setUpData(dataBaseManager.getDate().get(ItemNumber).getId(), Type, Title, Memo, Data_Y, Data_M, Data_D, Time_h, Time_m);
                     }
+
+                    NotificationManagement notificationManagement = new NotificationManagement(getApplicationContext());
+                    notificationManagement.All_ListShow();
                     finish();
                 }else{
                     Toast.makeText(ItemAdd_View.this, "제목을 입력해 주세요.", Toast.LENGTH_SHORT).show();

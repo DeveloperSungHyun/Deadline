@@ -1,27 +1,20 @@
 package com.example.deadline;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.service.autofill.UserData;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.deadline.DataBase.DataBaseManager;
-import com.example.deadline.DataBase.UserDataBase;
-import com.example.deadline.DataBase.UserDataDao;
 import com.example.deadline.DataBase.UserDataset;
 import com.example.deadline.SystemSettingsValue.StartSetting;
-import com.example.deadline.SystemSettingsValue.SystemValue;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -48,6 +41,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        int permission = ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.POST_NOTIFICATIONS);
+        if (permission == PackageManager.PERMISSION_DENIED) {
+            // 마쉬멜로우 이상버전부터 권한을 물어본다
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                // 권한 체크(READ_PHONE_STATE의 requestCode를 1000으로 세팅
+                requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 1000);
+            }
+            return;
+        }
 
         ImageView_SettingsButton = findViewById(R.id.ImageView_SettingsButton);
         recyclerView = findViewById(R.id.recyclerView);
