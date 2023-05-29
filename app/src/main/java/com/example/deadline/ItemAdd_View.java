@@ -17,13 +17,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.deadline.DataBase.DataBaseManager;
 import com.example.deadline.DataBase.UserDataset;
+import com.example.deadline.SystemSettingsValue.StartSetting;
 
 import java.util.Calendar;
 
-public class ItemAdd_View extends Activity {
+public class ItemAdd_View extends AppCompatActivity {
     DataBaseManager dataBaseManager;
     Intent Intent_getData;
 
@@ -152,6 +154,9 @@ public class ItemAdd_View extends Activity {
         super.onStart();
 
         Intent_getData = getIntent();
+
+        StartSetting startSetting = new StartSetting(getApplicationContext());
+        startSetting.Setting_Theme();
 
         ItemNumber = Intent_getData.getIntExtra("ItemNumber", -1);
 

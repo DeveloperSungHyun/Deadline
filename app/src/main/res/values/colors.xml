@@ -10,4 +10,6 @@
 
     <color name="text_color1">#FF000000</color>
     <color name="text_color2">#505050</color>
+
+    <drawable name="settings_icon">@drawable/settings_icon_r</drawable>
 </resources>

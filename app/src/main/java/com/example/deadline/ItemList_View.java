@@ -7,8 +7,9 @@ public class ItemList_View {
     String Memo;
     int Y, M, D;//년 월 일
     int time_h, time_m;//시 분
+    int TextView_CountDay;//남은 날짜
 
-    public ItemList_View(int Type, String Title, String Memo, int Y,int M, int D, int time_h, int time_m){
+    public ItemList_View(int Type, String Title, String Memo, int Y,int M, int D, int time_h, int time_m, int TextView_CountDay){
         this.Type = Type;
 
         this.Title = Title;
@@ -20,6 +21,8 @@ public class ItemList_View {
 
         this.time_h = time_h;
         this.time_m = time_m;
+
+        this.TextView_CountDay = TextView_CountDay;
     }
 
     public int getType() {
@@ -84,5 +87,13 @@ public class ItemList_View {
 
     public void setTime_m(int time_m) {
         this.time_m = time_m;
+    }
+
+    public int getTextView_CountDay() {
+        return TextView_CountDay;
+    }
+
+    public void setTextView_CountDay(int textView_CountDay) {
+        TextView_CountDay = textView_CountDay;
     }
 }

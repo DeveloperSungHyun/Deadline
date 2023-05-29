@@ -17,7 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.deadline.DataBase.DataBaseManager;
 
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.Year;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
@@ -45,11 +49,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
 
+        Long PointDay, startDay;
+        int Year, Month, Day, Hour, Minute;
+
+        Calendar Point = Calendar.getInstance();
+        Calendar start = Calendar.getInstance();
+
+        Year = itemList_views.get(position).getY();
+        Month = itemList_views.get(position).getM();
+        Day = itemList_views.get(position).getD();
+        Hour = itemList_views.get(position).getTime_h();
+        Minute = itemList_views.get(position).getTime_m();
+
+        Point.set(Year, Month, Day, Hour, Minute);
 
         holder.TextView_Title.setText(itemList_views.get(position).getTitle());
         holder.TextView_Memo.setText(itemList_views.get(position).getMemo());
-        holder.TextView_Data.setText(itemList_views.get(position).getY() + "년 " + (itemList_views.get(position).getM() + 1) + "월 " + itemList_views.get(position).getD() + "일");
-        holder.TextView_Time.setText(itemList_views.get(position).getTime_h() + " : " + itemList_views.get(position).getTime_m());
+        holder.TextView_Data.setText(Year + "년 " + Month + "월 " + Day + "일");
+        holder.TextView_Time.setText(Hour + " : " + Minute);
+
+        PointDay = Point.getTimeInMillis();
+        startDay = start.getTimeInMillis();
+
+        holder.TextView_CountDay.setText("D-" + ((PointDay - startDay) / (24 * 60 * 60 * 1000)) + " 일");
+
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +124,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        TextView TextView_CountDay;
         TextView TextView_Title;
         TextView TextView_Memo;
         TextView TextView_Data;
@@ -111,7 +136,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             TextView_Memo = itemView.findViewById(R.id.TextView_Memo);
             TextView_Data = itemView.findViewById(R.id.TextView_Data);
             TextView_Time = itemView.findViewById(R.id.TextView_Time);
-
+            TextView_CountDay = itemView.findViewById(R.id.TextView_CountDay);
         }
     }
 }
