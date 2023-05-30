@@ -13,6 +13,7 @@ public class NotificationManagement {
     Context context;
 
     NotificationManager notificationManager;
+    NotificationCompat.Builder builder;
     public NotificationManagement(Context context){
         this.context = context;
 
@@ -44,7 +45,6 @@ public class NotificationManagement {
     }
 
     public void All_ListShow(String Title, String Content, String LongContent){
-        NotificationCompat.Builder builder;
         builder = new NotificationCompat.Builder(context, "IMPORTANCE_LOW");
 
         builder.setSmallIcon(R.drawable.ic_launcher_foreground);
@@ -58,6 +58,30 @@ public class NotificationManagement {
         builder.setOngoing(true);//알림 못지우기
 
         notificationManager.notify(0, builder.build());
+    }
+
+    public void AlarmShow(int level, String Title, String Content){
+        switch (level){
+            case 0:{
+                builder = new NotificationCompat.Builder(context, "IMPORTANCE_DEFAULT");//일반 알림
+                break;
+            }
+            case 1:{
+                builder = new NotificationCompat.Builder(context, "IMPORTANCE_HIGH");//중요 알림
+                break;
+            }
+        }
+
+        builder.setSmallIcon(R.drawable.ic_launcher_foreground);
+        builder.setTicker("알람 간단한 설명");
+        builder.setContentTitle(Title);
+        builder.setContentText(Content);
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        builder.setPriority(0);
+        builder.setDefaults(Notification.PRIORITY_HIGH);
+        builder.setOngoing(false);//알림 못지우기
+
+        notificationManager.notify(1, builder.build());
     }
 
 }

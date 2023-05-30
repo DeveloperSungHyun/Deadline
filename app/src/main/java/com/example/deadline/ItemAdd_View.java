@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.deadline.AlarmService.AlarmManagement;
 import com.example.deadline.DataBase.DataBaseManager;
 import com.example.deadline.DataBase.UserDataset;
 import com.example.deadline.SystemSettingsValue.StartSetting;
@@ -62,7 +63,7 @@ public class ItemAdd_View extends AppCompatActivity {
             Data_M = calendar.get(Calendar.MONTH);
             Data_D = calendar.get(Calendar.DATE);
 
-            Time_h = calendar.get(Calendar.HOUR);
+            Time_h = calendar.get(Calendar.HOUR_OF_DAY);
             Time_m = calendar.get(Calendar.MINUTE);
         }
 
@@ -123,7 +124,7 @@ public class ItemAdd_View extends AppCompatActivity {
 
                         TextView_TimeSetting.setText(Time_h + " : " + Time_m);
                     }
-                }, Time_h, Time_m, false);
+                }, Time_h, Time_m, true);
                 timePickerDialog.show();
             }
         });
@@ -143,6 +144,8 @@ public class ItemAdd_View extends AppCompatActivity {
                     }
 
                     NotificationManagement notificationManagement = new NotificationManagement(getApplicationContext());
+                    AlarmManagement alarmManagement = new AlarmManagement(getApplicationContext());
+
                     String LongContent = "";
 
                     Long PointDay, startDay;
@@ -151,14 +154,17 @@ public class ItemAdd_View extends AppCompatActivity {
                     for (int i = 0; i < dataBaseManager.getDate().size(); i++){//UserDataset userDataset : dataBaseManager.getDate()
                         UserDataset userDataset = dataBaseManager.getDate().get(i);
 
-                        Point.set(userDataset.getY(), userDataset.getM(), userDataset.getD(), userDataset.getTime_h(), userDataset.getTime_m());
+                        Point.set(userDataset.getY(), userDataset.getM(), userDataset.getD(), userDataset.getTime_h(), userDataset.getTime_m(), 0);
 
                         PointDay = Point.getTimeInMillis();
                         startDay = start.getTimeInMillis();
 
                         LongContent += userDataset.getTitle() + "(D-" + (PointDay - startDay) / (24 * 60 * 60 * 1000) + ")";
                         if(i < dataBaseManager.getDate().size() - 1) LongContent += "\n";
+
+                        alarmManagement.Alarm_add(userDataset, Point);//알람 추가
                     }
+
                     notificationManagement.All_ListShow("Title", dataBaseManager.getDate().get(0).getTitle(), LongContent);
 
                     finish();
