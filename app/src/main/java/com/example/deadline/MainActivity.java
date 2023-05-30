@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.deadline.AlarmService.AlarmManagement;
 import com.example.deadline.DataBase.DataBaseManager;
 import com.example.deadline.DataBase.UserDataset;
 import com.example.deadline.SystemSettingsValue.StartSetting;
@@ -89,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        AlarmManagement alarmManagement = new AlarmManagement(getApplicationContext());
+        alarmManagement.DayLoop();
+        alarmManagement.CheckAlarm();
     }
 
 

@@ -61,17 +61,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Hour = itemList_views.get(position).getTime_h();
         Minute = itemList_views.get(position).getTime_m();
 
-        Point.set(Year, Month, Day, Hour, Minute);
+        Point.set(Year, Month, Day + 1, Hour, Minute);
 
         holder.TextView_Title.setText(itemList_views.get(position).getTitle());
         holder.TextView_Memo.setText(itemList_views.get(position).getMemo());
-        holder.TextView_Data.setText(Year + "년 " + Month + "월 " + Day + "일");
+        holder.TextView_Data.setText(Year + "년 " + (Month + 1) + "월 " + Day + "일");
         holder.TextView_Time.setText(Hour + " : " + Minute);
 
         PointDay = Point.getTimeInMillis();
         startDay = start.getTimeInMillis();
 
-        holder.TextView_CountDay.setText("D-" + ((PointDay - startDay) / (24 * 60 * 60 * 1000)) + " 일");
+        if(Year == start.get(Calendar.YEAR) && Month == start.get(Calendar.MONTH) && Day == start.get(Calendar.DATE)){
+            holder.TextView_CountDay.setText("D-Day");
+        }else {
+            holder.TextView_CountDay.setText("D-" + ((PointDay - startDay) / (24 * 60 * 60 * 1000)) + " 일");
+        }
 
 
 

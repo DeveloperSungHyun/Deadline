@@ -146,26 +146,14 @@ public class ItemAdd_View extends AppCompatActivity {
                     NotificationManagement notificationManagement = new NotificationManagement(getApplicationContext());
                     AlarmManagement alarmManagement = new AlarmManagement(getApplicationContext());
 
-                    String LongContent = "";
+                    notificationManagement.All_ListShow();
 
-                    Long PointDay, startDay;
-                    Calendar Point = Calendar.getInstance();
-                    Calendar start = Calendar.getInstance();
-                    for (int i = 0; i < dataBaseManager.getDate().size(); i++){//UserDataset userDataset : dataBaseManager.getDate()
-                        UserDataset userDataset = dataBaseManager.getDate().get(i);
+                    for(UserDataset userDataset : dataBaseManager.getDate()){
+                        Calendar calendar = Calendar.getInstance();
 
-                        Point.set(userDataset.getY(), userDataset.getM(), userDataset.getD(), userDataset.getTime_h(), userDataset.getTime_m(), 0);
-
-                        PointDay = Point.getTimeInMillis();
-                        startDay = start.getTimeInMillis();
-
-                        LongContent += userDataset.getTitle() + "(D-" + (PointDay - startDay) / (24 * 60 * 60 * 1000) + ")";
-                        if(i < dataBaseManager.getDate().size() - 1) LongContent += "\n";
-
-                        alarmManagement.Alarm_add(userDataset, Point);//알람 추가
+                        calendar.set(userDataset.getY(), userDataset.getM(), userDataset.getD(), userDataset.getTime_h(), userDataset.getTime_m(), 0);
+                        alarmManagement.Alarm_add(userDataset, calendar);//알람 추가
                     }
-
-                    notificationManagement.All_ListShow("Title", dataBaseManager.getDate().get(0).getTitle(), LongContent);
 
                     finish();
                 }else{

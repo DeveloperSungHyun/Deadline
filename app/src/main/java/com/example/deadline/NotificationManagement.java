@@ -8,6 +8,11 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.deadline.DataBase.DataBaseManager;
+import com.example.deadline.DataBase.UserDataset;
+
+import java.util.Calendar;
+
 public class NotificationManagement {
 
     Context context;
@@ -44,13 +49,42 @@ public class NotificationManagement {
         }
     }
 
-    public void All_ListShow(String Title, String Content, String LongContent){
+    public void All_ListShow(){
+
+        DataBaseManager dataBaseManager = new DataBaseManager(context);
+
+        String LongContent = "";
+
+        Long PointDay, startDay;
+        Calendar Point = Calendar.getInstance();
+        Calendar start = Calendar.getInstance();
+        for (int i = 0; i < dataBaseManager.getDate().size(); i++){//UserDataset userDataset : dataBaseManager.getDate()
+            UserDataset userDataset = dataBaseManager.getDate().get(i);
+
+            Point.set(userDataset.getY(), userDataset.getM(), userDataset.getD() + 1, userDataset.getTime_h(), userDataset.getTime_m(), 0);
+
+            PointDay = Point.getTimeInMillis();
+            startDay = start.getTimeInMillis();
+
+
+            if(userDataset.getY() == start.get(Calendar.YEAR) && userDataset.getM() == start.get(Calendar.MONTH) && userDataset.getD() == start.get(Calendar.DATE)){
+                LongContent += userDataset.getTitle() + "(D-Day)";
+            }else {
+                LongContent += userDataset.getTitle() + "(D-" + (PointDay - startDay) / (24 * 60 * 60 * 1000) + ")";
+            }
+
+            if(i < dataBaseManager.getDate().size() - 1) LongContent += "\n";
+        }
+
         builder = new NotificationCompat.Builder(context, "IMPORTANCE_LOW");
 
         builder.setSmallIcon(R.drawable.ic_launcher_foreground);
         builder.setTicker("알람 간단한 설명");
-        builder.setContentTitle(Title);
-        builder.setContentText(Content);
+        builder.setContentTitle("목록");
+        if(dataBaseManager.getDate().size() > 0)
+            builder.setContentText(dataBaseManager.getDate().get(0).getTitle());
+        else
+            builder.setContentText("목록이 없습니다.");
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(LongContent));
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         builder.setPriority(0);
