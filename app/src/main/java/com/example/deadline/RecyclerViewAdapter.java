@@ -61,7 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Hour = itemList_views.get(position).getTime_h();
         Minute = itemList_views.get(position).getTime_m();
 
-        Point.set(Year, Month, Day + 1, Hour, Minute);
+        Point.set(Year, Month, Day, Hour, Minute);
 
         holder.TextView_Title.setText(itemList_views.get(position).getTitle());
         holder.TextView_Memo.setText(itemList_views.get(position).getMemo());

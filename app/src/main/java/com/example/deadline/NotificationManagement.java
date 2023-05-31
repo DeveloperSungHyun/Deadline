@@ -61,7 +61,7 @@ public class NotificationManagement {
         for (int i = 0; i < dataBaseManager.getDate().size(); i++){//UserDataset userDataset : dataBaseManager.getDate()
             UserDataset userDataset = dataBaseManager.getDate().get(i);
 
-            Point.set(userDataset.getY(), userDataset.getM(), userDataset.getD() + 1, userDataset.getTime_h(), userDataset.getTime_m(), 0);
+            Point.set(userDataset.getY(), userDataset.getM(), userDataset.getD(), userDataset.getTime_h(), userDataset.getTime_m(), 0);
 
             PointDay = Point.getTimeInMillis();
             startDay = start.getTimeInMillis();

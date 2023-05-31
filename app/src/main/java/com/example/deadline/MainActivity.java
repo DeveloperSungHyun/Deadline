@@ -6,11 +6,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.service.controls.DeviceTypes;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     FloatingButton_add.show();
                 }
 
-
+                String test = "7장 연습문제 6번";
             }
         });
 
@@ -95,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        AlarmManagement alarmManagement = new AlarmManagement(getApplicationContext());
-        alarmManagement.DayLoop();
+        first_start();
+
     }
 
 
@@ -133,5 +136,22 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewAdapter = new RecyclerViewAdapter(itemList_views, getApplicationContext());
         recyclerView.setAdapter(recyclerViewAdapter);
 
+    }
+
+
+    private void first_start(){
+        SharedPreferences pref = getSharedPreferences("isFirst", Activity.MODE_PRIVATE);
+        boolean first = pref.getBoolean("isFirst", false);
+        if(first==false){
+            Log.d("Is first Time?", "first");
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putBoolean("isFirst",true);
+            editor.commit();
+            //앱 최초 실행시 하고 싶은 작업
+            AlarmManagement alarmManagement = new AlarmManagement(getApplicationContext());
+            alarmManagement.DayLoop();
+        }else{
+            Log.d("Is first Time?", "not first");
+        }
     }
 }

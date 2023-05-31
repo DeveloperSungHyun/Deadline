@@ -23,7 +23,9 @@ public class AlarmService extends BroadcastReceiver {
                 notificationManagement.All_ListShow();
                 Log.d("=================", "Loop");
                 AlarmManagement alarmManagement = new AlarmManagement(context);
-                alarmManagement.CheckAlarm();//매일 3번씩 울리는 알람 재 설정
+
+                if(dataBaseManager.getDate().size() != 0)
+                    alarmManagement.CheckAlarm();//매일 3번씩 울리는 알람 재 설정
 
                 dataBaseManager = new DataBaseManager(context);
                 for(UserDataset userDataset : dataBaseManager.getDate()){//안전을 위한 재설정
