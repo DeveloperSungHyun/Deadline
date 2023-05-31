@@ -2,6 +2,7 @@ package com.example.deadline;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,12 +10,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.service.controls.DeviceTypes;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.example.deadline.AlarmService.AlarmManagement;
 import com.example.deadline.DataBase.DataBaseManager;
 import com.example.deadline.DataBase.UserDataset;
+import com.example.deadline.SystemSettingsValue.DeviceType;
 import com.example.deadline.SystemSettingsValue.StartSetting;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
+    RecyclerView.LayoutManager linearLayoutManager, gridLayoutManager;
 
     ArrayList<ItemList_View> itemList_views;
 
@@ -93,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
         AlarmManagement alarmManagement = new AlarmManagement(getApplicationContext());
         alarmManagement.DayLoop();
-        alarmManagement.CheckAlarm();
     }
 
 
@@ -106,7 +109,17 @@ public class MainActivity extends AppCompatActivity {
 
         dataBaseManager = new DataBaseManager(getApplicationContext());
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+
+        DeviceType deviceType = new DeviceType(getApplicationContext());
+        if(deviceType.IsPhone()){
+            linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+            recyclerView.setLayoutManager(linearLayoutManager);
+        }else if(deviceType.IsTablet()){
+            gridLayoutManager = new GridLayoutManager(getApplicationContext(),2);
+            recyclerView.setLayoutManager(gridLayoutManager);
+        }
+
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
         itemList_views = new ArrayList<>();
 

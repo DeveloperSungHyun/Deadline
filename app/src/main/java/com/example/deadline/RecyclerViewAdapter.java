@@ -109,6 +109,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                 dataBaseManager.setDelete(dataBaseManager.getDate().get(holder.getAdapterPosition()).getId());
                                 itemList_views.remove(holder.getAdapterPosition());
                                 notifyItemRemoved(holder.getAdapterPosition());
+
+                                NotificationManagement notificationManagement = new NotificationManagement(context);
+                                notificationManagement.All_ListShow();
                             }
                         }
                     }
